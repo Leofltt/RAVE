@@ -319,6 +319,7 @@ class MultiScaleSTFT(nn.Module):
         return stfts
 
 
+@gin.configurable
 class AudioDistanceV1(nn.Module):
 
     def __init__(self, multiscale_stft: Callable[[], nn.Module],
