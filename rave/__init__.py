@@ -31,3 +31,9 @@ from .discriminator import *
 from .model import RAVE, BetaWarmupCallback
 from .pqmf import *
 from .balancer import *
+
+from .core import *
+from .descript_discriminator import *
+from .quantization import *
+from .resampler import *
+from .transforms import *

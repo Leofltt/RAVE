@@ -1,3 +1,4 @@
+import gin
 # adapted from https://github.com/descriptinc/descript-audio-codec
 
 import numpy as np
@@ -184,6 +185,7 @@ class MRD(nn.Module):
         return fmap
 
 
+@gin.configurable
 class DescriptDiscriminator(nn.Module):
 
     def __init__(

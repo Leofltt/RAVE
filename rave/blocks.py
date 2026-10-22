@@ -240,6 +240,7 @@ class NoiseGenerator(nn.Module):
         return noise
 
 
+@gin.configurable
 class NoiseGeneratorV2(nn.Module):
 
     def __init__(
@@ -319,6 +320,7 @@ class GRU(nn.Module):
         self.enabled = True
 
 
+@gin.configurable
 class Generator(nn.Module):
 
     def __init__(
@@ -421,6 +423,7 @@ class Generator(nn.Module):
         return waveform
 
 
+@gin.configurable
 class Encoder(nn.Module):
 
     def __init__(
@@ -511,6 +514,7 @@ def normalize_dilations(dilations: Union[Sequence[int],
     return dilations
 
 
+@gin.configurable
 class EncoderV2(nn.Module):
 
     def __init__(
@@ -596,6 +600,7 @@ class EncoderV2(nn.Module):
         return x
 
 
+@gin.configurable
 class GeneratorV2(nn.Module):
 
     def __init__(
@@ -613,6 +618,8 @@ class GeneratorV2(nn.Module):
         noise_module: Optional[NoiseGeneratorV2] = None,
         activation: Callable[[int], nn.Module] = lambda dim: nn.LeakyReLU(.2),
         adain: Optional[Callable[[int], nn.Module]] = None,
+        causal_convtranspose: bool = False,
+        **kwargs,
     ) -> None:
         super().__init__()
         if data_size is None:
@@ -714,6 +721,7 @@ class GeneratorV2(nn.Module):
         pass
 
 
+@gin.configurable
 class VariationalEncoder(nn.Module):
 
     def __init__(self, encoder, beta: float = 1.0, n_channels=1):
@@ -745,6 +753,7 @@ class VariationalEncoder(nn.Module):
         return z
 
 
+@gin.configurable
 class WasserteinEncoder(nn.Module):
 
     def __init__(
@@ -791,6 +800,7 @@ class WasserteinEncoder(nn.Module):
         return z
 
 
+@gin.configurable
 class DiscreteEncoder(nn.Module):
 
     def __init__(self,
@@ -830,6 +840,7 @@ class DiscreteEncoder(nn.Module):
         return z
 
 
+@gin.configurable
 class SphericalEncoder(nn.Module):
 
     def __init__(self, encoder_cls: Callable[[], nn.Module], n_channels: int = 1) -> None:
@@ -849,6 +860,7 @@ class SphericalEncoder(nn.Module):
         return z
 
 
+@gin.configurable
 class Snake(nn.Module):
 
     def __init__(self, dim: int) -> None:
@@ -860,6 +872,7 @@ class Snake(nn.Module):
                                                        x).sin().pow(2)
 
 
+@gin.configurable
 class AdaptiveInstanceNormalization(nn.Module):
 
     def __init__(self, dim: int) -> None:

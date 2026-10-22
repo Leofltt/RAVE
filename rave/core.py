@@ -1,3 +1,4 @@
+import gin
 import json
 import os
 from pathlib import Path
@@ -29,6 +30,7 @@ def random_angle(min_f=20, max_f=8000, sr=24000):
     return rand
 
 
+@gin.configurable
 def get_augmented_latent_size(latent_size: int, noise_augmentation: int):
     return latent_size + noise_augmentation
 
@@ -148,6 +150,7 @@ def n_fft_to_num_bands(n_fft: int) -> int:
     return n_fft // 2 + 1
 
 
+@gin.configurable
 def hinge_gan(score_real, score_fake):
     loss_dis = torch.relu(1 - score_real) + torch.relu(1 + score_fake)
     loss_dis = loss_dis.mean()
@@ -233,6 +236,7 @@ def relative_distance(
     return norm(x - y) / norm(x)
 
 
+@gin.configurable
 def mean_difference(target: torch.Tensor,
                     value: torch.Tensor,
                     norm: str = 'L1',
@@ -266,6 +270,7 @@ class MelScale(nn.Module):
         return y
 
 
+@gin.configurable
 class MultiScaleSTFT(nn.Module):
 
     def __init__(self,
@@ -273,7 +278,9 @@ class MultiScaleSTFT(nn.Module):
                  sample_rate: int,
                  magnitude: bool = True,
                  normalized: bool = False,
-                 num_mels: Optional[int] = None) -> None:
+                 num_mels: Optional[int] = None,
+                 random_crop: bool = False,
+                 **kwargs) -> None:
         super().__init__()
         self.scales = scales
         self.magnitude = magnitude

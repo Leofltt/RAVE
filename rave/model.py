@@ -162,7 +162,9 @@ class RAVE(pl.LightningModule):
         enable_pqmf_encode: Optional[bool] = None,
         enable_pqmf_decode: Optional[bool] = None,
         is_mel_input: Optional[bool] = None,
-        loss_weights = None
+        loss_weights = None,
+        freeze_encoder: bool = False,
+        **kwargs
     ):
         super().__init__()
         self.pqmf = pqmf(n_channels=n_channels)
